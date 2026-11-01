@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: django-demo
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.3
+      - key: SECRET_KEY
+        sync: false
+      - key: DEBUG
+        value: "False"
+      - key: MENSAGEM
+        value: Olá, turma!
+      - key: AMBIENTE
+        value: producao
