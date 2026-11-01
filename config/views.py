@@ -9,7 +9,7 @@ def home(request):
     dados = {
         "mensagem": os.environ.get("MENSAGEM", "Olá, turma!"),  # vem da variável de ambiente
         "ambiente": os.environ.get("AMBIENTE", "local"),        # vem da variável de ambiente
-        "versao": "1.0",                                        # vem do código
+        "versao": "2.0",                                        # vem do código
         "hora_do_servidor": datetime.now(timezone.utc).isoformat(timespec="seconds"),
     }
     return JsonResponse(dados, json_dumps_params={"ensure_ascii": False, "indent": 2})
