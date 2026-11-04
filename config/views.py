@@ -1,8 +1,11 @@
 import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from django.http import HttpResponse, JsonResponse
 from django.utils.html import escape
+
+# Horário de Brasília (UTC-3, sem horário de verão)
+FUSO_BRASIL = timezone(timedelta(hours=-3))
 
 PAGINA = """<!doctype html>
 <html lang="pt-BR">
@@ -33,7 +36,7 @@ PAGINA = """<!doctype html>
   <div class="cartoes">
     <div class="cartao"><span>Ambiente (variável)</span><strong>__AMBIENTE__</strong></div>
     <div class="cartao"><span>Versão (código)</span><strong>__VERSAO__</strong></div>
-    <div class="cartao"><span>Hora do servidor (UTC)</span><strong>__HORA__</strong></div>
+    <div class="cartao"><span>Hora (Brasília)</span><strong>__HORA__</strong></div>
   </div>
   <footer>Atualize a página para ver a hora mudar</footer>
 </main>
@@ -46,8 +49,8 @@ def dados():
     return {
         "mensagem": os.environ.get("MENSAGEM", "Olá, turma!"),  # vem da variável de ambiente
         "ambiente": os.environ.get("AMBIENTE", "local"),        # vem da variável de ambiente
-        "versao": "2.0",                                        # vem do código
-        "hora_do_servidor": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "versao": "1.0",                                        # vem do código
+        "hora_do_servidor": datetime.now(FUSO_BRASIL).isoformat(timespec="seconds"),
     }
 
 
